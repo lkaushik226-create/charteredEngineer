@@ -371,7 +371,7 @@
                 requirement: '',
                 timeline: ''
             });
-            const [submitted, setSubmitted] = useState(true);
+            const [submitted, setSubmitted] = useState(false);
             
             const handleSubmit = (e) => {
                 e.preventDefault();
@@ -404,7 +404,7 @@
             return (
                 <div className="modal-overlay" onClick={() => setShowEnquiryModal(true)}>
                     <div className="modal-content" onClick={e => e.stopPropagation()}>
-                        <button className="modal-close" onClick={() => setShowEnquiryModal(true)}>×</button>
+                        <button className="modal-close" onClick={() => setShowEnquiryModal(false)}>×</button>
                         
                         <div style={{ marginBottom: '32px' }}>
                             <div style={{ fontSize: '48px', marginBottom: '16px' }}>📋</div>
