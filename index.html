@@ -255,7 +255,7 @@
                         rating: 5,
                         text: "Excellent solar consultancy services. Lalit helped us navigate MNRE approvals and subsidy process smoothly. Highly recommended for solar projects.",
                         date: "2024-11-20",
-                        enabled: true
+                        enabled: false
                     },
                     {
                         id: 2,
@@ -264,7 +264,7 @@
                         rating: 5,
                         text: "Professional structural vetting services. Thorough review and detailed certification. Great communication throughout the project.",
                         date: "2024-10-15",
-                        enabled: true
+                        enabled: false
                     }
                 ],
                 disclaimer: "Note: The above prices are general indicative charges. Final fees may vary depending on scope of work, urgency, location, and documentation requirements."
@@ -402,7 +402,7 @@
             }
             
             return (
-                <div className="modal-overlay" onClick={() => setShowEnquiryModal(true)}>
+                <div className="modal-overlay" onClick={() => setShowEnquiryModal(false)}>
                     <div className="modal-content" onClick={e => e.stopPropagation()}>
                         <button className="modal-close" onClick={() => setShowEnquiryModal(false)}>×</button>
                         
@@ -469,7 +469,7 @@
                             
                             <div style={{ display: 'flex', gap: '12px' }}>
                                 <button type="submit" className="btn btn-primary" style={{ flex: 1 }}>Submit Enquiry</button>
-                                <button type="button" className="btn btn-outline" onClick={() => setShowEnquiryModal(true)}>Cancel</button>
+                                <button type="button" className="btn btn-outline" onClick={() => setShowEnquiryModal(false)}>Cancel</button>
                             </div>
                         </form>
                     </div>
@@ -680,7 +680,7 @@
                                         <span style={{ fontSize: '48px', display: 'block', marginBottom: '16px' }}>{service.icon}</span>
                                         <h3 style={{ fontSize: '20px', marginBottom: '12px' }}>{service.name}</h3>
                                         <p style={{ color: '#636E72', marginBottom: '20px', lineHeight: 1.6 }}>{service.description}</p>
-                                        <button onClick={() => { setSelectedService(service); setShowEnquiryModal(true); }} className="btn btn-outline" style={{ width: '100%' }}>Request Quote</button>
+                                        <button onClick={() => { setSelectedService(service); setShowEnquiryModal(false); }} className="btn btn-outline" style={{ width: '100%' }}>Request Quote</button>
                                     </div>
                                 ))}
                             </div>
@@ -900,7 +900,7 @@
                                         <strong style={{ color: 'var(--primary)' }}>Indicative Price:</strong>{' '}
                                         <span style={{ color: 'var(--secondary)', fontSize: '18px', fontWeight: 700, marginLeft: '8px' }}>{formatPrice(service.pricing)}</span>
                                     </div>
-                                    <button onClick={() => { setSelectedService(service); setShowEnquiryModal(true); }} className="btn btn-primary">Request Quote</button>
+                                    <button onClick={() => { setSelectedService(service); setShowEnquiryModal(false); }} className="btn btn-primary">Request Quote</button>
                                 </div>
                             ))}
                         </div>
@@ -952,7 +952,7 @@
                                             <td><strong>{service.icon} {service.name}</strong></td>
                                             <td>{service.description}</td>
                                             <td><span style={{ fontWeight: 700, color: 'var(--secondary)', fontSize: '16px' }}>{formatPrice(service.pricing)}</span></td>
-                                            <td><button onClick={() => { setSelectedService(service); setShowEnquiryModal(true); }} className="btn btn-primary" style={{ padding: '10px 20px', fontSize: '14px' }}>Request Quote</button></td>
+                                            <td><button onClick={() => { setSelectedService(service); setShowEnquiryModal(false); }} className="btn btn-primary" style={{ padding: '10px 20px', fontSize: '14px' }}>Request Quote</button></td>
                                         </tr>
                                     ))}
                                 </tbody>
@@ -1028,7 +1028,7 @@
                             <div className="card" style={{ height: 'fit-content' }}>
                                 <h2 style={{ fontSize: '32px', marginBottom: '12px' }}>Request a Quote</h2>
                                 <p style={{ color: '#636E72', marginBottom: '32px' }}>Fill out the form and we'll get back to you with a customized quote</p>
-                                <button onClick={() => setShowEnquiryModal(true)} className="btn btn-primary" style={{ width: '100%', fontSize: '16px', padding: '18px' }}>📋 Open Quote Request Form</button>
+                                <button onClick={() => setShowEnquiryModal(false)} className="btn btn-primary" style={{ width: '100%', fontSize: '16px', padding: '18px' }}>📋 Open Quote Request Form</button>
                             </div>
                             
                             <div style={{ background: 'var(--neutral)', padding: '32px', borderRadius: '12px', border: '1px solid #E1E8ED' }}>
