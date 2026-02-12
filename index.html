@@ -278,7 +278,7 @@
             const [isAdmin, setIsAdmin] = useState(false);
             const [adminLoggedIn, setAdminLoggedIn] = useState(false);
             const [selectedService, setSelectedService] = useState(null);
-            const [showEnquiryModal, setShowEnquiryModal] = useState(false);
+            const [showEnquiryModal, setShowEnquiryModal] = useState(true);
             
             useEffect(() => {
                 localStorage.setItem('lalitkaushikCEData', JSON.stringify(data));
@@ -371,7 +371,7 @@
                 requirement: '',
                 timeline: ''
             });
-            const [submitted, setSubmitted] = useState(false);
+            const [submitted, setSubmitted] = useState(true);
             
             const handleSubmit = (e) => {
                 e.preventDefault();
