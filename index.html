@@ -382,7 +382,7 @@
                     status: 'New'
                 };
                 updateData('enquiries', [...enquiries, newEnquiry]);
-                setSubmitted(true);
+                setSubmitted(false);
                 setTimeout(() => {
                     setShowEnquiryModal(false);
                     setSubmitted(false);
