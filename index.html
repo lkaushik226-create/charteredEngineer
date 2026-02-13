@@ -14,31 +14,46 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
+        :root {
+            --primary: #1A237E;      /* Royal Navy - Expert Authority */
+            --secondary: #D4AF37;    /* Metallic Gold - Premium Service */
+            --bg-light: #F8F9FA;     /* Professional White */
+            --text-main: #2C3E50;    /* Technical Slate */
+            --accent-hover: #C5A028; /* Deep Gold for Hover states */
+        }
+        
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; transition: all 0.3s; }
-        body.light-mode { background: #F8F9FA; color: #2D3436; }
-        body.dark-mode { background: #1a1a2e; color: #e0e0e0; }
-        .dark-mode .card { background: #2a2a3e; border-color: #3a3a4e; color: #e0e0e0; }
-        .dark-mode input, .dark-mode textarea, .dark-mode select { background: #2a2a3e; border-color: #3a3a4e; color: #e0e0e0; }
+        body.light-mode { background: var(--bg-light); color: var(--text-main); }
+        body.dark-mode { background: #0d1117; color: #e0e0e0; }
+        .dark-mode .card { background: #161b22; border-color: #30363d; color: #e0e0e0; }
+        .dark-mode input, .dark-mode textarea, .dark-mode select { background: #0d1117; border-color: #30363d; color: #e0e0e0; }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, #1A237E 0%, #283593 100%);
+            color: #FFFFFF;
+            border-bottom: 4px solid var(--secondary);
+        }
         
         .contact-float { position: fixed; right: 20px; bottom: 20px; z-index: 999; display: flex; flex-direction: column; gap: 12px; }
         .contact-btn { width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; text-decoration: none; box-shadow: 0 4px 16px rgba(0,0,0,0.25); font-size: 24px; transition: all 0.3s; }
         .contact-btn:hover { transform: scale(1.15); }
         
-        .dark-toggle { position: fixed; top: 20px; right: 20px; z-index: 1000; width: 50px; height: 50px; border-radius: 50%; background: #D4AF37; border: none; cursor: pointer; font-size: 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); transition: all 0.3s; }
+        .dark-toggle { position: fixed; top: 20px; right: 20px; z-index: 1000; width: 50px; height: 50px; border-radius: 50%; background: var(--secondary); border: none; cursor: pointer; font-size: 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); transition: all 0.3s; }
         .dark-toggle:hover { transform: scale(1.1); }
         
-        .admin-toggle { position: fixed; bottom: 20px; left: 20px; width: 40px; height: 40px; border-radius: 50%; background: rgba(26,26,46,0.1); border: 2px solid rgba(26,26,46,0.2); cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; z-index: 998; opacity: 0.3; transition: all 0.3s; }
-        .admin-toggle:hover { opacity: 1; transform: scale(1.1); }
+        .admin-toggle { position: fixed; bottom: 20px; left: 20px; width: 40px; height: 40px; border-radius: 50%; background: rgba(26,35,126,0.1); border: 2px solid rgba(26,35,126,0.2); cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; z-index: 998; opacity: 0.3; transition: all 0.3s; }
+        .admin-toggle:hover { opacity: 1; background: rgba(26,35,126,0.2); transform: scale(1.1); }
         
-        .welcome-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(26,26,46,0.95); display: flex; align-items: center; justify-content: center; z-index: 10001; animation: fadeIn 0.5s; }
+        .welcome-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(26,35,126,0.95); display: flex; align-items: center; justify-content: center; z-index: 10001; animation: fadeIn 0.5s; }
         .welcome-card { background: white; border-radius: 20px; padding: 60px 50px; text-align: center; max-width: 500px; animation: scaleIn 0.5s; box-shadow: 0 20px 80px rgba(0,0,0,0.3); }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes scaleIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
         
-        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(26,26,46,0.85); display: flex; align-items: center; justify-content: center; z-index: 10000; padding: 20px; backdrop-filter: blur(4px); }
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(26,35,126,0.85); display: flex; align-items: center; justify-content: center; z-index: 10000; padding: 20px; backdrop-filter: blur(4px); }
         .modal-content { background: white; border-radius: 12px; max-width: 900px; width: 100%; max-height: 90vh; overflow-y: auto; padding: 40px; position: relative; box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
-        .dark-mode .modal-content { background: #2a2a3e; color: #e0e0e0; }
+        .dark-mode .modal-content { background: #161b22; color: #e0e0e0; }
         .modal-close { position: absolute; top: 20px; right: 20px; background: #f0f0f0; border: none; font-size: 28px; cursor: pointer; color: #666; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
         .modal-close:hover { background: #e0e0e0; transform: rotate(90deg); }
         
@@ -51,18 +66,20 @@
 </head>
 <body class="light-mode">
     <button id="darkToggle" class="dark-toggle">🌙</button>
-    <button id="adminToggle" class="admin-toggle">⚙️</button>
+    <button id="adminToggle" class="admin-toggle" title="Admin Panel (Click 3 times)">⚙️</button>
     
     <div class="contact-float">
-        <a href="https://wa.me/919953715382" target="_blank" class="contact-btn" style="background: #25D366;">💬</a>
-        <a href="tel:+919953715382" class="contact-btn" style="background: #D4AF37;">📞</a>
-        <a href="mailto:info@nexgenceng.com" class="contact-btn" style="background: #1A1A2E;">✉️</a>
+        <a href="https://wa.me/919953715382?text=Hello%20NexGen%20CEng%2C%20I%20need%20Chartered%20Engineer%20services" target="_blank" class="contact-btn" style="background: #25D366;" title="WhatsApp">💬</a>
+        <a href="tel:+919953715382" class="contact-btn" style="background: var(--secondary);" title="Call">📞</a>
+        <a href="mailto:info@nexgenceng.com" class="contact-btn" style="background: var(--primary);" title="Email">✉️</a>
     </div>
 
     <div id="root"></div>
     
     <script type="text/babel">
         const { useState, useEffect } = React;
+        
+        const ADMIN_NUMBER = "919953715382"; // WhatsApp number for notifications
         
         const DATA = {
             siteName: "NexGen CEng",
@@ -78,8 +95,27 @@
                 { id: 1, title: "Senior CE - Structural", location: "Delhi NCR", exp: "5-8 years", enabled: true }
             ],
             news: [
-                { id: 1, title: "MNRE Guidelines 2024", excerpt: "New solar project guidelines", date: "2024-02-01", enabled: true }
+                { id: 1, title: "MNRE Guidelines 2024", excerpt: "New solar project guidelines released", date: "2024-02-01", enabled: true }
             ]
+        };
+        
+        // WhatsApp Notification Function
+        const sendWhatsAppNotification = (enquiryData) => {
+            const message = `🔔 NEW ENQUIRY RECEIVED
+
+📋 Details:
+Name: ${enquiryData.name}
+Email: ${enquiryData.email}
+Mobile: ${enquiryData.mobile}
+Service: ${enquiryData.service}
+
+💬 Requirements:
+${enquiryData.requirements}
+
+⏰ Time: ${new Date().toLocaleString('en-IN')}`;
+
+            const whatsappURL = `https://wa.me/${ADMIN_NUMBER}?text=${encodeURIComponent(message)}`;
+            window.open(whatsappURL, '_blank');
         };
         
         function App() {
@@ -89,7 +125,6 @@
             const [isAdmin, setIsAdmin] = useState(false);
             const [adminPass, setAdminPass] = useState('');
             const [showModal, setShowModal] = useState(false);
-            const [formData, setFormData] = useState({});
             
             useEffect(() => {
                 const timer = setTimeout(() => setShowWelcome(false), 3000);
@@ -98,18 +133,24 @@
             
             useEffect(() => {
                 document.body.className = darkMode ? 'dark-mode' : 'light-mode';
-                document.getElementById('darkToggle').textContent = darkMode ? '☀️' : '🌙';
+                const toggle = document.getElementById('darkToggle');
+                if (toggle) toggle.textContent = darkMode ? '☀️' : '🌙';
             }, [darkMode]);
+            
+            // Expose setIsAdmin to global scope for admin toggle
+            useEffect(() => {
+                window.appSetIsAdmin = setIsAdmin;
+            }, []);
             
             if (showWelcome) {
                 return (
                     <div className="welcome-overlay">
                         <div className="welcome-card">
                             <div style={{ fontSize: '80px', marginBottom: '20px' }}>✅</div>
-                            <h2 style={{ fontSize: '32px', marginBottom: '12px', color: '#1A1A2E' }}>Welcome to {DATA.siteName}!</h2>
+                            <h2 style={{ fontSize: '32px', marginBottom: '12px', color: 'var(--primary)' }}>Welcome to {DATA.siteName}!</h2>
                             <p style={{ fontSize: '18px', color: '#636E72', marginBottom: '20px' }}>India's Trusted Chartered Engineering Network</p>
-                            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(212,175,55,0.1)', padding: '8px 16px', borderRadius: '20px', fontWeight: 600, color: '#D4AF37' }}>
-                                <span style={{ width: '8px', height: '8px', background: '#D4AF37', borderRadius: '50%', animation: 'pulse 2s infinite' }}></span>
+                            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(212,175,55,0.1)', padding: '8px 16px', borderRadius: '20px', fontWeight: 600, color: 'var(--secondary)' }}>
+                                <span style={{ width: '8px', height: '8px', background: 'var(--secondary)', borderRadius: '50%', animation: 'pulse 2s infinite' }}></span>
                                 500+ Valuations Completed
                             </div>
                         </div>
@@ -119,47 +160,60 @@
             
             if (isAdmin && adminPass !== 'NexGen@2024') {
                 return (
-                    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(135deg, #1A1A2E 0%, #16161F 100%)' }}>
-                        <div style={{ background: 'white', padding: '48px', borderRadius: '12px', maxWidth: '420px', width: '100%', boxShadow: '0 20px 60px rgba(0,0,0,0.3)' }}>
+                    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(135deg, var(--primary) 0%, #283593 100%)' }}>
+                        <div style={{ background: 'white', padding: '48px', borderRadius: '12px', maxWidth: '420px', width: '100%', boxShadow: '0 20px 60px rgba(0,0,0,0.3)', borderTop: '4px solid var(--secondary)' }}>
                             <div style={{ textAlign: 'center', marginBottom: '32px' }}>
                                 <div style={{ fontSize: '64px', marginBottom: '16px' }}>🔐</div>
-                                <h2 style={{ fontSize: '28px', marginBottom: '8px', color: '#1A1A2E' }}>Admin Panel</h2>
+                                <h2 style={{ fontSize: '28px', marginBottom: '8px', color: 'var(--primary)' }}>Admin Panel</h2>
+                                <p style={{ color: '#636E72' }}>NexGen CEng Management</p>
                             </div>
-                            <input type="password" placeholder="Enter password" value={adminPass} onChange={e => setAdminPass(e.target.value)} style={{ width: '100%', padding: '14px', border: '2px solid #E1E8ED', borderRadius: '6px', marginBottom: '16px', fontSize: '15px' }} />
-                            <button onClick={() => adminPass === 'NexGen@2024' ? null : setIsAdmin(false)} style={{ width: '100%', padding: '14px', background: '#D4AF37', color: '#1A1A2E', border: 'none', borderRadius: '6px', fontWeight: 600, cursor: 'pointer', fontSize: '16px' }}>Login</button>
+                            <input 
+                                type="password" 
+                                placeholder="Enter password" 
+                                value={adminPass} 
+                                onChange={e => setAdminPass(e.target.value)}
+                                onKeyPress={e => e.key === 'Enter' && setAdminPass(e.target.value)}
+                                style={{ width: '100%', padding: '14px', border: '2px solid #E1E8ED', borderRadius: '6px', marginBottom: '16px', fontSize: '15px' }} 
+                            />
+                            <button 
+                                onClick={() => adminPass !== 'NexGen@2024' && setIsAdmin(false)} 
+                                style={{ width: '100%', padding: '14px', background: 'var(--secondary)', color: 'var(--primary)', border: 'none', borderRadius: '6px', fontWeight: 600, cursor: 'pointer', fontSize: '16px' }}
+                            >
+                                {adminPass === 'NexGen@2024' ? 'Access Granted ✓' : 'Login'}
+                            </button>
                             <div style={{ marginTop: '24px', textAlign: 'center' }}>
-                                <a href="#" onClick={e => { e.preventDefault(); setIsAdmin(false); }} style={{ color: '#1A1A2E', fontSize: '14px' }}>← Back</a>
+                                <a href="#" onClick={e => { e.preventDefault(); setIsAdmin(false); setAdminPass(''); }} style={{ color: 'var(--primary)', fontSize: '14px', textDecoration: 'none' }}>← Back to Website</a>
                             </div>
                         </div>
                     </div>
                 );
             }
             
-            if (isAdmin) {
+            if (isAdmin && adminPass === 'NexGen@2024') {
                 return (
-                    <div style={{ minHeight: '100vh', background: '#F8F9FA' }}>
-                        <header style={{ background: '#1A1A2E', color: 'white', padding: '24px 32px', borderBottom: '4px solid #D4AF37' }}>
+                    <div style={{ minHeight: '100vh', background: 'var(--bg-light)' }}>
+                        <header style={{ background: 'var(--primary)', color: 'white', padding: '24px 32px', borderBottom: '4px solid var(--secondary)' }}>
                             <div style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                 <h1 style={{ color: 'white', margin: 0, fontSize: '28px' }}>Admin Dashboard</h1>
-                                <button onClick={() => { setIsAdmin(false); setAdminPass(''); }} style={{ background: '#D4AF37', color: '#1A1A2E', border: 'none', padding: '10px 20px', borderRadius: '6px', fontWeight: 600, cursor: 'pointer' }}>Logout</button>
+                                <button onClick={() => { setIsAdmin(false); setAdminPass(''); }} style={{ background: 'var(--secondary)', color: 'var(--primary)', border: 'none', padding: '10px 20px', borderRadius: '6px', fontWeight: 600, cursor: 'pointer' }}>Logout</button>
                             </div>
                         </header>
                         <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '32px' }}>
                             <div style={{ background: 'white', borderRadius: '12px', padding: '32px', boxShadow: '0 4px 16px rgba(0,0,0,0.08)' }}>
-                                <h2 style={{ fontSize: '24px', marginBottom: '24px', color: '#1A1A2E' }}>Services Management</h2>
+                                <h2 style={{ fontSize: '24px', marginBottom: '24px', color: 'var(--primary)' }}>Services Management</h2>
                                 <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                                     <thead>
-                                        <tr style={{ background: '#F8F9FA' }}>
-                                            <th style={{ padding: '16px', textAlign: 'left', borderBottom: '2px solid #E1E8ED' }}>Service</th>
-                                            <th style={{ padding: '16px', textAlign: 'left', borderBottom: '2px solid #E1E8ED' }}>Price</th>
-                                            <th style={{ padding: '16px', textAlign: 'left', borderBottom: '2px solid #E1E8ED' }}>Status</th>
+                                        <tr style={{ background: 'var(--bg-light)' }}>
+                                            <th style={{ padding: '16px', textAlign: 'left', borderBottom: '2px solid #E1E8ED', color: 'var(--primary)' }}>Service</th>
+                                            <th style={{ padding: '16px', textAlign: 'left', borderBottom: '2px solid #E1E8ED', color: 'var(--primary)' }}>Price</th>
+                                            <th style={{ padding: '16px', textAlign: 'left', borderBottom: '2px solid #E1E8ED', color: 'var(--primary)' }}>Status</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {DATA.services.map(s => (
                                             <tr key={s.id}>
                                                 <td style={{ padding: '16px', borderBottom: '1px solid #E1E8ED' }}>{s.icon} {s.name}</td>
-                                                <td style={{ padding: '16px', borderBottom: '1px solid #E1E8ED' }}>{s.price}</td>
+                                                <td style={{ padding: '16px', borderBottom: '1px solid #E1E8ED', color: 'var(--secondary)', fontWeight: 600 }}>{s.price}</td>
                                                 <td style={{ padding: '16px', borderBottom: '1px solid #E1E8ED' }}>
                                                     <span style={{ padding: '6px 14px', borderRadius: '999px', fontSize: '12px', fontWeight: 700, background: s.enabled ? '#E8F5E9' : '#FFEBEE', color: s.enabled ? '#2E7D32' : '#C62828' }}>
                                                         {s.enabled ? 'Enabled' : 'Disabled'}
@@ -177,33 +231,33 @@
             
             return (
                 <>
-                    <Header setPage={setPage} />
+                    <Header setPage={setPage} setDarkMode={setDarkMode} darkMode={darkMode} />
                     <Navigation page={page} setPage={setPage} />
                     {page === 'home' && <HomePage setShowModal={setShowModal} />}
                     {page === 'services' && <ServicesPage setShowModal={setShowModal} />}
-                    {page === 'contact' && <ContactPage />}
+                    {page === 'contact' && <ContactPage setShowModal={setShowModal} />}
                     {page === 'jobs' && <JobsPage />}
                     {page === 'news' && <NewsPage />}
                     <Footer setPage={setPage} />
-                    {showModal && <EnquiryModal setShowModal={setShowModal} formData={formData} setFormData={setFormData} />}
+                    {showModal && <EnquiryModal setShowModal={setShowModal} />}
                 </>
             );
         }
         
         const Header = ({ setPage }) => (
-            <header style={{ background: '#1A1A2E', color: 'white', borderBottom: '1px solid rgba(212,175,55,0.1)', padding: '24px 0' }}>
+            <header className="hero-gradient" style={{ padding: '24px 0' }}>
                 <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 24px', display: 'grid', gridTemplateColumns: '1fr auto', alignItems: 'center', gap: '32px' }}>
                     <div>
                         <h1 style={{ color: 'white', fontSize: '36px', fontWeight: 700, margin: 0, cursor: 'pointer' }} onClick={() => setPage('home')}>{DATA.siteName}</h1>
-                        <p style={{ color: '#D4AF37', fontSize: '16px', fontWeight: 600, margin: '8px 0 0' }}>⚡ {DATA.tagline}</p>
+                        <p style={{ color: 'var(--secondary)', fontSize: '16px', fontWeight: 600, margin: '8px 0 0' }}>⚡ {DATA.tagline}</p>
                     </div>
                     <div style={{ textAlign: 'right' }}>
-                        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(212,175,55,0.1)', padding: '8px 16px', borderRadius: '20px', fontWeight: 600, color: '#D4AF37', marginBottom: '12px' }}>
-                            <span style={{ width: '8px', height: '8px', background: '#D4AF37', borderRadius: '50%' }}></span>
+                        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(212,175,55,0.2)', padding: '8px 16px', borderRadius: '20px', fontWeight: 600, color: 'white', marginBottom: '12px' }}>
+                            <span style={{ width: '8px', height: '8px', background: 'var(--secondary)', borderRadius: '50%', animation: 'pulse 2s infinite' }}></span>
                             500+ Valuations
                         </div>
-                        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(212,175,55,0.1)', padding: '8px 16px', borderRadius: '20px', fontWeight: 600, color: '#D4AF37' }}>
-                            <span style={{ width: '8px', height: '8px', background: '#D4AF37', borderRadius: '50%' }}></span>
+                        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(212,175,55,0.2)', padding: '8px 16px', borderRadius: '20px', fontWeight: 600, color: 'white' }}>
+                            <span style={{ width: '8px', height: '8px', background: 'var(--secondary)', borderRadius: '50%', animation: 'pulse 2s infinite' }}></span>
                             20+ States
                         </div>
                     </div>
@@ -215,7 +269,7 @@
             <nav style={{ background: 'white', borderBottom: '1px solid #E1E8ED', position: 'sticky', top: 0, zIndex: 100, boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}>
                 <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 24px', display: 'flex', gap: 0 }}>
                     {['home', 'services', 'contact', 'jobs', 'news'].map(p => (
-                        <button key={p} onClick={() => setPage(p)} style={{ background: 'transparent', border: 'none', padding: '18px 24px', cursor: 'pointer', fontSize: '14px', fontWeight: 500, color: page === p ? '#1A1A2E' : '#2D3436', borderBottom: page === p ? '3px solid #D4AF37' : '3px solid transparent', transition: '0.25s', textTransform: 'capitalize' }}>
+                        <button key={p} onClick={() => setPage(p)} style={{ background: 'transparent', border: 'none', padding: '18px 24px', cursor: 'pointer', fontSize: '14px', fontWeight: 500, color: page === p ? 'var(--primary)' : 'var(--text-main)', borderBottom: page === p ? '3px solid var(--secondary)' : '3px solid transparent', transition: '0.25s', textTransform: 'capitalize' }}>
                             {p}
                         </button>
                     ))}
@@ -225,34 +279,34 @@
         
         const HomePage = ({ setShowModal }) => (
             <>
-                <section style={{ background: 'linear-gradient(135deg, #1A1A2E 0%, #16161F 100%)', padding: '80px 24px', textAlign: 'center', color: 'white' }}>
+                <section className="hero-gradient" style={{ padding: '80px 24px', textAlign: 'center' }}>
                     <div style={{ maxWidth: '900px', margin: '0 auto' }}>
                         <h2 style={{ color: 'white', fontSize: '42px', fontWeight: 700, marginBottom: '16px' }}>Professional Engineering Consultancy Services</h2>
-                        <p style={{ fontSize: '18px', color: 'rgba(255,255,255,0.85)', marginBottom: '40px' }}>MNRE Empanelled Chartered Engineers Across India</p>
-                        <button onClick={() => setShowModal(true)} style={{ background: '#D4AF37', color: '#1A1A2E', border: 'none', padding: '14px 28px', borderRadius: '6px', fontWeight: 600, cursor: 'pointer', fontSize: '15px' }}>Request Quote</button>
+                        <p style={{ fontSize: '18px', color: 'rgba(255,255,255,0.9)', marginBottom: '40px' }}>MNRE Empanelled Chartered Engineers Across India</p>
+                        <button onClick={() => setShowModal(true)} style={{ background: 'var(--secondary)', color: 'var(--primary)', border: 'none', padding: '14px 32px', borderRadius: '6px', fontWeight: 600, cursor: 'pointer', fontSize: '16px', boxShadow: '0 4px 12px rgba(212,175,55,0.3)', transition: '0.3s' }}>Request Quote</button>
                     </div>
                 </section>
                 
-                <section style={{ padding: '60px 20px', background: '#f8f9fa', textAlign: 'center' }}>
-                    <h2 style={{ color: '#D4AF37', marginBottom: '30px', fontSize: '32px' }}>Trusted By Industry Leaders</h2>
+                <section style={{ padding: '60px 20px', background: 'var(--bg-light)', textAlign: 'center' }}>
+                    <h2 style={{ color: 'var(--secondary)', marginBottom: '30px', fontSize: '32px', fontWeight: 700 }}>Trusted By Industry Leaders</h2>
                     <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '40px', opacity: 0.8 }}>
                         {['IOCL', 'BHEL', 'TCS', 'REIL', 'CEL Sahibabad', 'SMS Demag'].map(c => (
-                            <span key={c} style={{ fontWeight: 'bold', fontSize: '1.3rem', color: '#1A1A2E' }}>{c}</span>
+                            <span key={c} style={{ fontWeight: 'bold', fontSize: '1.3rem', color: 'var(--primary)' }}>{c}</span>
                         ))}
                     </div>
                 </section>
                 
                 <section style={{ background: 'white', padding: '80px 24px' }}>
                     <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
-                        <h2 style={{ textAlign: 'center', fontSize: '38px', marginBottom: '48px', color: '#1A1A2E' }}>Our Services</h2>
+                        <h2 style={{ textAlign: 'center', fontSize: '38px', marginBottom: '48px', color: 'var(--primary)' }}>Our Services</h2>
                         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>
                             {DATA.services.filter(s => s.enabled).map(s => (
-                                <div key={s.id} style={{ background: 'white', borderRadius: '12px', padding: '32px', boxShadow: '0 4px 16px rgba(0,0,0,0.08)', border: '1px solid #E1E8ED', transition: '0.3s' }}>
+                                <div key={s.id} style={{ background: 'white', borderRadius: '12px', padding: '32px', boxShadow: '0 4px 16px rgba(0,0,0,0.08)', border: '1px solid #E1E8ED', transition: '0.3s' }} onMouseOver={e => e.currentTarget.style.borderColor = 'var(--secondary)'} onMouseOut={e => e.currentTarget.style.borderColor = '#E1E8ED'}>
                                     <span style={{ fontSize: '48px', display: 'block', marginBottom: '16px' }}>{s.icon}</span>
-                                    <h3 style={{ fontSize: '20px', marginBottom: '12px', color: '#1A1A2E' }}>{s.name}</h3>
+                                    <h3 style={{ fontSize: '20px', marginBottom: '12px', color: 'var(--primary)' }}>{s.name}</h3>
                                     <p style={{ color: '#636E72', marginBottom: '16px' }}>{s.desc}</p>
-                                    <p style={{ fontWeight: 700, color: '#D4AF37', fontSize: '16px', marginBottom: '20px' }}>{s.price}</p>
-                                    <button onClick={() => setShowModal(true)} style={{ background: 'transparent', color: '#1A1A2E', border: '2px solid #1A1A2E', padding: '10px 20px', borderRadius: '6px', fontWeight: 600, cursor: 'pointer', width: '100%' }}>Request Quote</button>
+                                    <p style={{ fontWeight: 700, color: 'var(--secondary)', fontSize: '16px', marginBottom: '20px' }}>{s.price}</p>
+                                    <button onClick={() => setShowModal(true)} style={{ background: 'transparent', color: 'var(--primary)', border: '2px solid var(--primary)', padding: '10px 20px', borderRadius: '6px', fontWeight: 600, cursor: 'pointer', width: '100%', transition: '0.3s' }}>Request Quote</button>
                                 </div>
                             ))}
                         </div>
@@ -264,43 +318,44 @@
         const ServicesPage = ({ setShowModal }) => (
             <div style={{ background: 'white', minHeight: '100vh', padding: '80px 24px' }}>
                 <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
-                    <h1 style={{ fontSize: '42px', marginBottom: '48px', textAlign: 'center', color: '#1A1A2E' }}>Our Services</h1>
+                    <h1 style={{ fontSize: '42px', marginBottom: '48px', textAlign: 'center', color: 'var(--primary)' }}>Our Services</h1>
                     {DATA.services.filter(s => s.enabled).map(s => (
-                        <div key={s.id} style={{ background: 'white', borderRadius: '12px', padding: '32px', marginBottom: '24px', boxShadow: '0 4px 16px rgba(0,0,0,0.08)', border: '1px solid #E1E8ED' }}>
+                        <div key={s.id} style={{ background: 'var(--bg-light)', borderRadius: '12px', padding: '32px', marginBottom: '24px', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '16px' }}>
                                 <span style={{ fontSize: '40px' }}>{s.icon}</span>
-                                <h3 style={{ fontSize: '24px', color: '#1A1A2E' }}>{s.name}</h3>
+                                <h3 style={{ fontSize: '24px', color: 'var(--primary)' }}>{s.name}</h3>
                             </div>
                             <p style={{ color: '#636E72', marginBottom: '16px' }}>{s.desc}</p>
-                            <p style={{ fontWeight: 700, color: '#D4AF37', fontSize: '18px', marginBottom: '20px' }}>Price: {s.price}</p>
-                            <button onClick={() => setShowModal(true)} style={{ background: '#D4AF37', color: '#1A1A2E', border: 'none', padding: '12px 24px', borderRadius: '6px', fontWeight: 600, cursor: 'pointer' }}>Request Quote</button>
+                            <p style={{ fontWeight: 700, color: 'var(--secondary)', fontSize: '18px', marginBottom: '20px' }}>Price: {s.price}</p>
+                            <button onClick={() => setShowModal(true)} style={{ background: 'var(--secondary)', color: 'var(--primary)', border: 'none', padding: '12px 24px', borderRadius: '6px', fontWeight: 600, cursor: 'pointer' }}>Request Quote</button>
                         </div>
                     ))}
                 </div>
             </div>
         );
         
-        const ContactPage = () => (
+        const ContactPage = ({ setShowModal }) => (
             <div style={{ background: 'white', minHeight: '100vh', padding: '80px 24px' }}>
                 <div style={{ maxWidth: '1280px', margin: '0 auto', textAlign: 'center' }}>
-                    <h1 style={{ fontSize: '42px', marginBottom: '24px', color: '#1A1A2E' }}>Contact Us</h1>
+                    <h1 style={{ fontSize: '42px', marginBottom: '24px', color: 'var(--primary)' }}>Contact Us</h1>
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px', marginBottom: '48px' }}>
-                        <div style={{ background: '#F8F9FA', padding: '32px', borderRadius: '12px' }}>
+                        <div style={{ background: 'var(--bg-light)', padding: '32px', borderRadius: '12px', border: '1px solid #E1E8ED' }}>
                             <div style={{ fontSize: '48px', marginBottom: '16px' }}>📞</div>
-                            <h3 style={{ fontSize: '20px', marginBottom: '8px', color: '#1A1A2E' }}>Call Us</h3>
-                            <p style={{ fontSize: '18px', fontWeight: 600, color: '#1A1A2E' }}>+91-9953715382</p>
+                            <h3 style={{ fontSize: '20px', marginBottom: '8px', color: 'var(--primary)' }}>Call Us</h3>
+                            <p style={{ fontSize: '18px', fontWeight: 600, color: 'var(--text-main)' }}>+91-9953715382</p>
                         </div>
-                        <div style={{ background: '#F8F9FA', padding: '32px', borderRadius: '12px' }}>
+                        <div style={{ background: 'var(--bg-light)', padding: '32px', borderRadius: '12px', border: '1px solid #E1E8ED' }}>
                             <div style={{ fontSize: '48px', marginBottom: '16px' }}>✉️</div>
-                            <h3 style={{ fontSize: '20px', marginBottom: '8px', color: '#1A1A2E' }}>Email Us</h3>
-                            <p style={{ fontSize: '18px', fontWeight: 600, color: '#1A1A2E' }}>info@nexgenceng.com</p>
+                            <h3 style={{ fontSize: '20px', marginBottom: '8px', color: 'var(--primary)' }}>Email Us</h3>
+                            <p style={{ fontSize: '18px', fontWeight: 600, color: 'var(--text-main)' }}>info@nexgenceng.com</p>
                         </div>
-                        <div style={{ background: '#F8F9FA', padding: '32px', borderRadius: '12px' }}>
+                        <div style={{ background: 'var(--bg-light)', padding: '32px', borderRadius: '12px', border: '1px solid #E1E8ED' }}>
                             <div style={{ fontSize: '48px', marginBottom: '16px' }}>📍</div>
-                            <h3 style={{ fontSize: '20px', marginBottom: '8px', color: '#1A1A2E' }}>Visit</h3>
+                            <h3 style={{ fontSize: '20px', marginBottom: '8px', color: 'var(--primary)' }}>Visit</h3>
                             <p style={{ fontSize: '16px', color: '#636E72' }}>Delhi NCR, India</p>
                         </div>
                     </div>
+                    <button onClick={() => setShowModal(true)} style={{ background: 'var(--secondary)', color: 'var(--primary)', border: 'none', padding: '14px 32px', borderRadius: '6px', fontWeight: 600, cursor: 'pointer', fontSize: '16px' }}>Send Enquiry</button>
                 </div>
             </div>
         );
@@ -308,10 +363,10 @@
         const JobsPage = () => (
             <div style={{ background: 'white', minHeight: '100vh', padding: '80px 24px' }}>
                 <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
-                    <h1 style={{ fontSize: '42px', marginBottom: '48px', textAlign: 'center', color: '#1A1A2E' }}>Jobs & Careers</h1>
+                    <h1 style={{ fontSize: '42px', marginBottom: '48px', textAlign: 'center', color: 'var(--primary)' }}>Jobs & Careers</h1>
                     {DATA.jobs.filter(j => j.enabled).map(j => (
-                        <div key={j.id} style={{ background: '#F8F9FA', borderRadius: '12px', padding: '32px', marginBottom: '24px' }}>
-                            <h3 style={{ fontSize: '24px', marginBottom: '12px', color: '#1A1A2E' }}>{j.title}</h3>
+                        <div key={j.id} style={{ background: 'var(--bg-light)', borderRadius: '12px', padding: '32px', marginBottom: '24px', border: '1px solid #E1E8ED' }}>
+                            <h3 style={{ fontSize: '24px', marginBottom: '12px', color: 'var(--primary)' }}>{j.title}</h3>
                             <p style={{ color: '#636E72', marginBottom: '8px' }}>📍 {j.location}</p>
                             <p style={{ color: '#636E72' }}>💼 {j.exp}</p>
                         </div>
@@ -323,10 +378,10 @@
         const NewsPage = () => (
             <div style={{ background: 'white', minHeight: '100vh', padding: '80px 24px' }}>
                 <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
-                    <h1 style={{ fontSize: '42px', marginBottom: '48px', textAlign: 'center', color: '#1A1A2E' }}>News & Updates</h1>
+                    <h1 style={{ fontSize: '42px', marginBottom: '48px', textAlign: 'center', color: 'var(--primary)' }}>News & Updates</h1>
                     {DATA.news.filter(n => n.enabled).map(n => (
-                        <div key={n.id} style={{ background: '#F8F9FA', borderRadius: '12px', padding: '32px', marginBottom: '24px' }}>
-                            <h3 style={{ fontSize: '24px', marginBottom: '12px', color: '#1A1A2E' }}>{n.title}</h3>
+                        <div key={n.id} style={{ background: 'var(--bg-light)', borderRadius: '12px', padding: '32px', marginBottom: '24px', border: '1px solid #E1E8ED' }}>
+                            <h3 style={{ fontSize: '24px', marginBottom: '12px', color: 'var(--primary)' }}>{n.title}</h3>
                             <p style={{ color: '#636E72', marginBottom: '8px', fontSize: '14px' }}>{n.date}</p>
                             <p style={{ color: '#636E72' }}>{n.excerpt}</p>
                         </div>
@@ -336,22 +391,34 @@
         );
         
         const Footer = ({ setPage }) => (
-            <footer style={{ background: '#1A1A2E', color: 'white', padding: '48px 24px 24px', borderTop: '4px solid #D4AF37' }}>
+            <footer style={{ background: 'var(--primary)', color: 'white', padding: '48px 24px 24px', borderTop: '4px solid var(--secondary)' }}>
                 <div style={{ maxWidth: '1280px', margin: '0 auto', textAlign: 'center' }}>
-                    <p style={{ color: 'rgba(255,255,255,0.6)', margin: 0, fontSize: '14px' }}>&copy; 2024 NexGen CEng. All Rights Reserved.</p>
+                    <p style={{ color: 'rgba(255,255,255,0.7)', margin: 0, fontSize: '14px' }}>&copy; 2024 NexGen CEng. All Rights Reserved.</p>
                 </div>
             </footer>
         );
         
-        const EnquiryModal = ({ setShowModal, formData, setFormData }) => {
+        const EnquiryModal = ({ setShowModal }) => {
             const [submitted, setSubmitted] = useState(false);
+            const [formData, setFormData] = useState({
+                name: '',
+                email: '',
+                mobile: '',
+                service: '',
+                requirements: ''
+            });
             
             const handleSubmit = (e) => {
                 e.preventDefault();
+                
+                // Send WhatsApp notification
+                sendWhatsAppNotification(formData);
+                
                 setSubmitted(true);
                 setTimeout(() => {
                     setShowModal(false);
                     setSubmitted(false);
+                    setFormData({ name: '', email: '', mobile: '', service: '', requirements: '' });
                 }, 2500);
             };
             
@@ -360,8 +427,9 @@
                     <div className="modal-overlay">
                         <div className="modal-content" style={{ maxWidth: '500px', textAlign: 'center' }}>
                             <div style={{ fontSize: '72px', marginBottom: '20px' }}>✅</div>
-                            <h2 style={{ fontSize: '28px', marginBottom: '12px', color: '#1A1A2E' }}>Thank You!</h2>
+                            <h2 style={{ fontSize: '28px', marginBottom: '12px', color: 'var(--primary)' }}>Thank You!</h2>
                             <p style={{ fontSize: '16px', color: '#636E72' }}>We'll contact you within 24 hours.</p>
+                            <p style={{ fontSize: '14px', color: 'var(--secondary)', marginTop: '16px' }}>WhatsApp notification sent to our team!</p>
                         </div>
                     </div>
                 );
@@ -371,48 +439,100 @@
                 <div className="modal-overlay" onClick={() => setShowModal(false)}>
                     <div className="modal-content" onClick={e => e.stopPropagation()}>
                         <button className="modal-close" onClick={() => setShowModal(false)}>×</button>
-                        <h2 style={{ fontSize: '32px', marginBottom: '24px', color: '#1A1A2E' }}>Request a Quote</h2>
+                        <h2 style={{ fontSize: '32px', marginBottom: '24px', color: 'var(--primary)' }}>Request a Quote</h2>
                         <form onSubmit={handleSubmit}>
                             <div style={{ marginBottom: '16px' }}>
-                                <input type="text" placeholder="Name *" required style={{ width: '100%', padding: '14px', border: '2px solid #E1E8ED', borderRadius: '6px', fontSize: '15px' }} />
+                                <input 
+                                    type="text" 
+                                    placeholder="Name *" 
+                                    required 
+                                    value={formData.name}
+                                    onChange={e => setFormData({...formData, name: e.target.value})}
+                                    style={{ width: '100%', padding: '14px', border: '2px solid #E1E8ED', borderRadius: '6px', fontSize: '15px' }} 
+                                />
                             </div>
                             <div style={{ marginBottom: '16px' }}>
-                                <input type="email" placeholder="Email *" required style={{ width: '100%', padding: '14px', border: '2px solid #E1E8ED', borderRadius: '6px', fontSize: '15px' }} />
+                                <input 
+                                    type="email" 
+                                    placeholder="Email *" 
+                                    required 
+                                    value={formData.email}
+                                    onChange={e => setFormData({...formData, email: e.target.value})}
+                                    style={{ width: '100%', padding: '14px', border: '2px solid #E1E8ED', borderRadius: '6px', fontSize: '15px' }} 
+                                />
                             </div>
                             <div style={{ marginBottom: '16px' }}>
-                                <input type="tel" placeholder="Mobile *" required style={{ width: '100%', padding: '14px', border: '2px solid #E1E8ED', borderRadius: '6px', fontSize: '15px' }} />
+                                <input 
+                                    type="tel" 
+                                    placeholder="Mobile *" 
+                                    required 
+                                    value={formData.mobile}
+                                    onChange={e => setFormData({...formData, mobile: e.target.value})}
+                                    style={{ width: '100%', padding: '14px', border: '2px solid #E1E8ED', borderRadius: '6px', fontSize: '15px' }} 
+                                />
                             </div>
                             <div style={{ marginBottom: '16px' }}>
-                                <select required style={{ width: '100%', padding: '14px', border: '2px solid #E1E8ED', borderRadius: '6px', fontSize: '15px' }}>
+                                <select 
+                                    required 
+                                    value={formData.service}
+                                    onChange={e => setFormData({...formData, service: e.target.value})}
+                                    style={{ width: '100%', padding: '14px', border: '2px solid #E1E8ED', borderRadius: '6px', fontSize: '15px' }}
+                                >
                                     <option value="">Select Service *</option>
                                     {DATA.services.filter(s => s.enabled).map(s => <option key={s.id} value={s.name}>{s.name}</option>)}
                                 </select>
                             </div>
                             <div style={{ marginBottom: '16px' }}>
-                                <textarea placeholder="Your Requirements *" required rows="4" style={{ width: '100%', padding: '14px', border: '2px solid #E1E8ED', borderRadius: '6px', fontSize: '15px' }}></textarea>
+                                <textarea 
+                                    placeholder="Your Requirements *" 
+                                    required 
+                                    rows="4" 
+                                    value={formData.requirements}
+                                    onChange={e => setFormData({...formData, requirements: e.target.value})}
+                                    style={{ width: '100%', padding: '14px', border: '2px solid #E1E8ED', borderRadius: '6px', fontSize: '15px' }}
+                                ></textarea>
                             </div>
-                            <button type="submit" style={{ width: '100%', background: '#D4AF37', color: '#1A1A2E', border: 'none', padding: '14px', borderRadius: '6px', fontWeight: 600, cursor: 'pointer', fontSize: '16px' }}>Submit Enquiry</button>
+                            <button type="submit" style={{ width: '100%', background: 'var(--secondary)', color: 'var(--primary)', border: 'none', padding: '14px', borderRadius: '6px', fontWeight: 600, cursor: 'pointer', fontSize: '16px' }}>Submit Enquiry</button>
+                            <p style={{ fontSize: '13px', color: '#636E72', marginTop: '12px', textAlign: 'center' }}>💬 Instant WhatsApp notification to our team</p>
                         </form>
                     </div>
                 </div>
             );
         };
         
-        document.getElementById('darkToggle').onclick = () => {
-            const isDark = document.body.className === 'dark-mode';
-            document.body.className = isDark ? 'light-mode' : 'dark-mode';
-            document.getElementById('darkToggle').textContent = isDark ? '🌙' : '☀️';
-        };
+        // Dark mode toggle
+        const darkToggleEl = document.getElementById('darkToggle');
+        if (darkToggleEl) {
+            darkToggleEl.onclick = () => {
+                const isDark = document.body.className === 'dark-mode';
+                document.body.className = isDark ? 'light-mode' : 'dark-mode';
+                darkToggleEl.textContent = isDark ? '🌙' : '☀️';
+            };
+        }
         
+        // Admin toggle - FIXED VERSION
         let adminClickCount = 0;
-        document.getElementById('adminToggle').onclick = () => {
-            adminClickCount++;
-            if (adminClickCount >= 3) {
-                const app = document.querySelector('#root')._reactRootContainer._internalRoot.current.child.stateNode;
-                app.setState({ isAdmin: true });
-                adminClickCount = 0;
-            }
-        };
+        let clickTimer = null;
+        const adminToggleEl = document.getElementById('adminToggle');
+        if (adminToggleEl) {
+            adminToggleEl.onclick = () => {
+                adminClickCount++;
+                adminToggleEl.style.background = 'rgba(212,175,55,0.3)';
+                
+                if (adminClickCount === 3) {
+                    if (window.appSetIsAdmin) {
+                        window.appSetIsAdmin(true);
+                    }
+                    adminClickCount = 0;
+                }
+                
+                clearTimeout(clickTimer);
+                clickTimer = setTimeout(() => {
+                    adminClickCount = 0;
+                    adminToggleEl.style.background = 'rgba(26,35,126,0.1)';
+                }, 2000);
+            };
+        }
         
         ReactDOM.createRoot(document.getElementById('root')).render(<App />);
     </script>
