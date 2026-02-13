@@ -1,161 +1,420 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- React & Babel (Production for speed) -->
-  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <title>NexGen CEng - Chartered Engineers India | CEng in 48 Hours</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: Inter, -apple-system, sans-serif; color: #2D3436; transition: background 0.3s, color 0.3s; }
-    body.light-mode { background: #F8F9FA; color: #2D3436; }
-    body.dark-mode { background: #1a1a2e; color: #e0e0e0; }
-    /* Dark mode overrides */
-    .dark-mode .card { background: #2a2a3e; border-color: #3a3a4e; }
-    .dark-mode input, .dark-mode textarea, .dark-mode select { background: #2a2a3e; border-color: #3a3a4e; color: #e0e0e0; }
-    /* Buttons, Modals, etc. - abbreviated for brevity */
-    .btn { padding: 14px 28px; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; transition: all 0.25s; display: inline-flex; align-items: center; gap: 8px; font-size: 15px; font-family: Inter, sans-serif; }
-    .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.15); }
-    .btn-primary { background: #D4AF37; color: #1A1A2E; }
-    .card { background: white; border-radius: 12px; padding: 32px; box-shadow: 0 4px 16px rgba(26,26,46,0.08); transition: all 0.3s; border: 1px solid #E1E8ED; }
-    .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
-    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
-    /* Modals */
-    .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(26,26,46,0.85); display: flex; align-items: center; justify-content: center; z-index: 10000; padding: 20px; animation: fadeIn 0.3s; backdrop-filter: blur(4px); }
-    .modal-content { background: white; border-radius: 12px; max-width: 900px; width: 100%; max-height: 90vh; overflow-y: auto; padding: 40px; position: relative; animation: slideUp 0.3s; box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-    /* Responsive */
-    @media (max-width: 768px) { .container { padding: 0 16px; } .grid-3 { grid-template-columns: 1fr; } }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="NexGen CEng - MNRE Empanelled Chartered Engineers serving Delhi, Bangalore, Noida, Greater Noida, Mumbai, Pune. Fast-track CEng certification in 48 hours. 500+ Valuations Completed.">
+    <meta name="keywords" content="chartered engineer Delhi, chartered engineer Bangalore, chartered engineer Noida, chartered engineer Mumbai, MNRE solar consultant, CEng certification India, structural design, chartered engineer near me">
+    <title>NexGen CEng - Chartered Engineers India | CEng in 48 Hours</title>
+    
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; transition: all 0.3s; }
+        body.light-mode { background: #F8F9FA; color: #2D3436; }
+        body.dark-mode { background: #1a1a2e; color: #e0e0e0; }
+        .dark-mode .card { background: #2a2a3e; border-color: #3a3a4e; color: #e0e0e0; }
+        .dark-mode input, .dark-mode textarea, .dark-mode select { background: #2a2a3e; border-color: #3a3a4e; color: #e0e0e0; }
+        
+        .contact-float { position: fixed; right: 20px; bottom: 20px; z-index: 999; display: flex; flex-direction: column; gap: 12px; }
+        .contact-btn { width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; text-decoration: none; box-shadow: 0 4px 16px rgba(0,0,0,0.25); font-size: 24px; transition: all 0.3s; }
+        .contact-btn:hover { transform: scale(1.15); }
+        
+        .dark-toggle { position: fixed; top: 20px; right: 20px; z-index: 1000; width: 50px; height: 50px; border-radius: 50%; background: #D4AF37; border: none; cursor: pointer; font-size: 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); transition: all 0.3s; }
+        .dark-toggle:hover { transform: scale(1.1); }
+        
+        .admin-toggle { position: fixed; bottom: 20px; left: 20px; width: 40px; height: 40px; border-radius: 50%; background: rgba(26,26,46,0.1); border: 2px solid rgba(26,26,46,0.2); cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; z-index: 998; opacity: 0.3; transition: all 0.3s; }
+        .admin-toggle:hover { opacity: 1; transform: scale(1.1); }
+        
+        .welcome-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(26,26,46,0.95); display: flex; align-items: center; justify-content: center; z-index: 10001; animation: fadeIn 0.5s; }
+        .welcome-card { background: white; border-radius: 20px; padding: 60px 50px; text-align: center; max-width: 500px; animation: scaleIn 0.5s; box-shadow: 0 20px 80px rgba(0,0,0,0.3); }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes scaleIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(26,26,46,0.85); display: flex; align-items: center; justify-content: center; z-index: 10000; padding: 20px; backdrop-filter: blur(4px); }
+        .modal-content { background: white; border-radius: 12px; max-width: 900px; width: 100%; max-height: 90vh; overflow-y: auto; padding: 40px; position: relative; box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+        .dark-mode .modal-content { background: #2a2a3e; color: #e0e0e0; }
+        .modal-close { position: absolute; top: 20px; right: 20px; background: #f0f0f0; border: none; font-size: 28px; cursor: pointer; color: #666; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
+        .modal-close:hover { background: #e0e0e0; transform: rotate(90deg); }
+        
+        @media (max-width: 768px) { 
+            .contact-float { bottom: 10px; right: 10px; }
+            .contact-btn { width: 50px; height: 50px; font-size: 20px; }
+            .welcome-card { padding: 40px 30px; margin: 20px; }
+        }
+    </style>
 </head>
 <body class="light-mode">
-  <!-- Toggles -->
-  <button id="darkModeToggle" class="dark-mode-toggle" title="Toggle Dark Mode">☀️</button>
-  <button id="adminToggle" class="admin-toggle" title="Admin Panel">⚙️</button>
-  <div id="root"></div>
+    <button id="darkToggle" class="dark-toggle">🌙</button>
+    <button id="adminToggle" class="admin-toggle">⚙️</button>
+    
+    <div class="contact-float">
+        <a href="https://wa.me/919953715382" target="_blank" class="contact-btn" style="background: #25D366;">💬</a>
+        <a href="tel:+919953715382" class="contact-btn" style="background: #D4AF37;">📞</a>
+        <a href="mailto:info@nexgenceng.com" class="contact-btn" style="background: #1A1A2E;">✉️</a>
+    </div>
 
-  <script type="text/babel">
-    const { useState, useEffect, createContext, useContext } = React;
-    const { createRoot } = ReactDOM;
-
-    // Context
-    const AppContext = createContext();
-    const useApp = () => useContext(AppContext);
-
-    // Data
-    const getInitialData = () => {
-      const stored = localStorage.getItem('nexgenCEngData');
-      if (stored) return JSON.parse(stored);
-      return {
-        config: { siteName: 'NexGen CEng', tagline: 'Fast-track your CEng certification in 48 hours', colors: { primary: '#1A1A2E', secondary: '#D4AF37', neutral: '#F8F9FA' }, contact: { mobile: '9953715382', email: 'info@nexgenceng.com' }, counters: { valuations: 500, states: 20 } },
-        services: [{ id: 1, name: 'Solar Consultancy', category: 'Solar', pricing: { type: 'range', min: 15000, max: 50000 }, enabled: true }],
-        enquiries: []
-      };
-    };
-
-    // Main App
-    function App() {
-      const [data, setData] = useState(getInitialData());
-      const [darkMode, setDarkMode] = useState(false);
-      const [showWelcome, setShowWelcome] = useState(true);
-
-      useEffect(() => {
-        localStorage.setItem('nexgenCEngData', JSON.stringify(data));
-        document.body.className = darkMode ? 'dark-mode' : 'light-mode';
-      }, [data, darkMode]);
-
-      useEffect(() => {
-        const timer = setTimeout(() => setShowWelcome(false), 3000);
-        return () => clearTimeout(timer);
-      }, []);
-
-      const updateData = (key, value) => setData(prev => ({ ...prev, [key]: value }));
-
-      const contextValue = { data, updateData, darkMode, setDarkMode };
-
-      return (
-        <AppContext.Provider value={contextValue}>
-          {showWelcome && <WelcomeScreen />}
-          <div className="app">
-            <Header />
-            <main className="container" style={{ padding: '40px 0' }}>
-              <Hero />
-              <Services />
-            </main>
-          </div>
-        </AppContext.Provider>
-      );
-    }
-
-    // Components (all defined)
-    const WelcomeScreen = () => (
-      <div className="modal-overlay" style={{ zIndex: 10001, background: 'rgba(26,26,46,0.95)' }}>
-        <div className="modal-content" style={{ maxWidth: '500px', textAlign: 'center' }}>
-          <div style={{ fontSize: '80px', marginBottom: '20px' }}>🚀</div>
-          <h2 style={{ fontSize: '32px', marginBottom: '12px', color: '#1A1A2E' }}>Welcome to NexGen CEng!</h2>
-          <p style={{ fontSize: '18px', color: '#636E72' }}>India\'s Trusted Chartered Engineering Network</p>
-        </div>
-      </div>
-    );
-
-    const Header = () => {
-      const { data } = useApp();
-      const config = data.config;
-      return (
-        <header style={{ background: config.colors.primary, color: 'white', padding: '24px 0' }}>
-          <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <div>
-              <h1 style={{ color: 'white', fontSize: '36px', fontWeight: '700' }}>{config.siteName}</h1>
-              <p style={{ color: config.colors.secondary, fontWeight: '600' }}>{config.tagline}</p>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        
+        const DATA = {
+            siteName: "NexGen CEng",
+            tagline: "Fast-track your CEng certification in 48 hours",
+            services: [
+                { id: 1, name: "Solar Consultancy", icon: "☀️", desc: "MNRE empanelled solar consultancy", price: "₹15,000-50,000", enabled: true },
+                { id: 2, name: "Structural Design", icon: "🏗️", desc: "Complete structural design services", price: "2.5% of Project", enabled: true },
+                { id: 3, name: "CEng Certification", icon: "📜", desc: "Fast-track certification in 48 hours", price: "₹25,000", enabled: true },
+                { id: 4, name: "Third-Party Inspection", icon: "🔍", desc: "Independent inspection services", price: "Request Quote", enabled: true },
+                { id: 5, name: "PMC Services", icon: "💼", desc: "Project management consultancy", price: "3% of Project", enabled: true }
+            ],
+            jobs: [
+                { id: 1, title: "Senior CE - Structural", location: "Delhi NCR", exp: "5-8 years", enabled: true }
+            ],
+            news: [
+                { id: 1, title: "MNRE Guidelines 2024", excerpt: "New solar project guidelines", date: "2024-02-01", enabled: true }
+            ]
+        };
+        
+        function App() {
+            const [page, setPage] = useState('home');
+            const [showWelcome, setShowWelcome] = useState(true);
+            const [darkMode, setDarkMode] = useState(false);
+            const [isAdmin, setIsAdmin] = useState(false);
+            const [adminPass, setAdminPass] = useState('');
+            const [showModal, setShowModal] = useState(false);
+            const [formData, setFormData] = useState({});
+            
+            useEffect(() => {
+                const timer = setTimeout(() => setShowWelcome(false), 3000);
+                return () => clearTimeout(timer);
+            }, []);
+            
+            useEffect(() => {
+                document.body.className = darkMode ? 'dark-mode' : 'light-mode';
+                document.getElementById('darkToggle').textContent = darkMode ? '☀️' : '🌙';
+            }, [darkMode]);
+            
+            if (showWelcome) {
+                return (
+                    <div className="welcome-overlay">
+                        <div className="welcome-card">
+                            <div style={{ fontSize: '80px', marginBottom: '20px' }}>✅</div>
+                            <h2 style={{ fontSize: '32px', marginBottom: '12px', color: '#1A1A2E' }}>Welcome to {DATA.siteName}!</h2>
+                            <p style={{ fontSize: '18px', color: '#636E72', marginBottom: '20px' }}>India's Trusted Chartered Engineering Network</p>
+                            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(212,175,55,0.1)', padding: '8px 16px', borderRadius: '20px', fontWeight: 600, color: '#D4AF37' }}>
+                                <span style={{ width: '8px', height: '8px', background: '#D4AF37', borderRadius: '50%', animation: 'pulse 2s infinite' }}></span>
+                                500+ Valuations Completed
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+            
+            if (isAdmin && adminPass !== 'NexGen@2024') {
+                return (
+                    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(135deg, #1A1A2E 0%, #16161F 100%)' }}>
+                        <div style={{ background: 'white', padding: '48px', borderRadius: '12px', maxWidth: '420px', width: '100%', boxShadow: '0 20px 60px rgba(0,0,0,0.3)' }}>
+                            <div style={{ textAlign: 'center', marginBottom: '32px' }}>
+                                <div style={{ fontSize: '64px', marginBottom: '16px' }}>🔐</div>
+                                <h2 style={{ fontSize: '28px', marginBottom: '8px', color: '#1A1A2E' }}>Admin Panel</h2>
+                            </div>
+                            <input type="password" placeholder="Enter password" value={adminPass} onChange={e => setAdminPass(e.target.value)} style={{ width: '100%', padding: '14px', border: '2px solid #E1E8ED', borderRadius: '6px', marginBottom: '16px', fontSize: '15px' }} />
+                            <button onClick={() => adminPass === 'NexGen@2024' ? null : setIsAdmin(false)} style={{ width: '100%', padding: '14px', background: '#D4AF37', color: '#1A1A2E', border: 'none', borderRadius: '6px', fontWeight: 600, cursor: 'pointer', fontSize: '16px' }}>Login</button>
+                            <div style={{ marginTop: '24px', textAlign: 'center' }}>
+                                <a href="#" onClick={e => { e.preventDefault(); setIsAdmin(false); }} style={{ color: '#1A1A2E', fontSize: '14px' }}>← Back</a>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+            
+            if (isAdmin) {
+                return (
+                    <div style={{ minHeight: '100vh', background: '#F8F9FA' }}>
+                        <header style={{ background: '#1A1A2E', color: 'white', padding: '24px 32px', borderBottom: '4px solid #D4AF37' }}>
+                            <div style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <h1 style={{ color: 'white', margin: 0, fontSize: '28px' }}>Admin Dashboard</h1>
+                                <button onClick={() => { setIsAdmin(false); setAdminPass(''); }} style={{ background: '#D4AF37', color: '#1A1A2E', border: 'none', padding: '10px 20px', borderRadius: '6px', fontWeight: 600, cursor: 'pointer' }}>Logout</button>
+                            </div>
+                        </header>
+                        <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '32px' }}>
+                            <div style={{ background: 'white', borderRadius: '12px', padding: '32px', boxShadow: '0 4px 16px rgba(0,0,0,0.08)' }}>
+                                <h2 style={{ fontSize: '24px', marginBottom: '24px', color: '#1A1A2E' }}>Services Management</h2>
+                                <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                                    <thead>
+                                        <tr style={{ background: '#F8F9FA' }}>
+                                            <th style={{ padding: '16px', textAlign: 'left', borderBottom: '2px solid #E1E8ED' }}>Service</th>
+                                            <th style={{ padding: '16px', textAlign: 'left', borderBottom: '2px solid #E1E8ED' }}>Price</th>
+                                            <th style={{ padding: '16px', textAlign: 'left', borderBottom: '2px solid #E1E8ED' }}>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {DATA.services.map(s => (
+                                            <tr key={s.id}>
+                                                <td style={{ padding: '16px', borderBottom: '1px solid #E1E8ED' }}>{s.icon} {s.name}</td>
+                                                <td style={{ padding: '16px', borderBottom: '1px solid #E1E8ED' }}>{s.price}</td>
+                                                <td style={{ padding: '16px', borderBottom: '1px solid #E1E8ED' }}>
+                                                    <span style={{ padding: '6px 14px', borderRadius: '999px', fontSize: '12px', fontWeight: 700, background: s.enabled ? '#E8F5E9' : '#FFEBEE', color: s.enabled ? '#2E7D32' : '#C62828' }}>
+                                                        {s.enabled ? 'Enabled' : 'Disabled'}
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+            
+            return (
+                <>
+                    <Header setPage={setPage} />
+                    <Navigation page={page} setPage={setPage} />
+                    {page === 'home' && <HomePage setShowModal={setShowModal} />}
+                    {page === 'services' && <ServicesPage setShowModal={setShowModal} />}
+                    {page === 'contact' && <ContactPage />}
+                    {page === 'jobs' && <JobsPage />}
+                    {page === 'news' && <NewsPage />}
+                    <Footer setPage={setPage} />
+                    {showModal && <EnquiryModal setShowModal={setShowModal} formData={formData} setFormData={setFormData} />}
+                </>
+            );
+        }
+        
+        const Header = ({ setPage }) => (
+            <header style={{ background: '#1A1A2E', color: 'white', borderBottom: '1px solid rgba(212,175,55,0.1)', padding: '24px 0' }}>
+                <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 24px', display: 'grid', gridTemplateColumns: '1fr auto', alignItems: 'center', gap: '32px' }}>
+                    <div>
+                        <h1 style={{ color: 'white', fontSize: '36px', fontWeight: 700, margin: 0, cursor: 'pointer' }} onClick={() => setPage('home')}>{DATA.siteName}</h1>
+                        <p style={{ color: '#D4AF37', fontSize: '16px', fontWeight: 600, margin: '8px 0 0' }}>⚡ {DATA.tagline}</p>
+                    </div>
+                    <div style={{ textAlign: 'right' }}>
+                        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(212,175,55,0.1)', padding: '8px 16px', borderRadius: '20px', fontWeight: 600, color: '#D4AF37', marginBottom: '12px' }}>
+                            <span style={{ width: '8px', height: '8px', background: '#D4AF37', borderRadius: '50%' }}></span>
+                            500+ Valuations
+                        </div>
+                        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(212,175,55,0.1)', padding: '8px 16px', borderRadius: '20px', fontWeight: 600, color: '#D4AF37' }}>
+                            <span style={{ width: '8px', height: '8px', background: '#D4AF37', borderRadius: '50%' }}></span>
+                            20+ States
+                        </div>
+                    </div>
+                </div>
+            </header>
+        );
+        
+        const Navigation = ({ page, setPage }) => (
+            <nav style={{ background: 'white', borderBottom: '1px solid #E1E8ED', position: 'sticky', top: 0, zIndex: 100, boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}>
+                <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 24px', display: 'flex', gap: 0 }}>
+                    {['home', 'services', 'contact', 'jobs', 'news'].map(p => (
+                        <button key={p} onClick={() => setPage(p)} style={{ background: 'transparent', border: 'none', padding: '18px 24px', cursor: 'pointer', fontSize: '14px', fontWeight: 500, color: page === p ? '#1A1A2E' : '#2D3436', borderBottom: page === p ? '3px solid #D4AF37' : '3px solid transparent', transition: '0.25s', textTransform: 'capitalize' }}>
+                            {p}
+                        </button>
+                    ))}
+                </div>
+            </nav>
+        );
+        
+        const HomePage = ({ setShowModal }) => (
+            <>
+                <section style={{ background: 'linear-gradient(135deg, #1A1A2E 0%, #16161F 100%)', padding: '80px 24px', textAlign: 'center', color: 'white' }}>
+                    <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+                        <h2 style={{ color: 'white', fontSize: '42px', fontWeight: 700, marginBottom: '16px' }}>Professional Engineering Consultancy Services</h2>
+                        <p style={{ fontSize: '18px', color: 'rgba(255,255,255,0.85)', marginBottom: '40px' }}>MNRE Empanelled Chartered Engineers Across India</p>
+                        <button onClick={() => setShowModal(true)} style={{ background: '#D4AF37', color: '#1A1A2E', border: 'none', padding: '14px 28px', borderRadius: '6px', fontWeight: 600, cursor: 'pointer', fontSize: '15px' }}>Request Quote</button>
+                    </div>
+                </section>
+                
+                <section style={{ padding: '60px 20px', background: '#f8f9fa', textAlign: 'center' }}>
+                    <h2 style={{ color: '#D4AF37', marginBottom: '30px', fontSize: '32px' }}>Trusted By Industry Leaders</h2>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '40px', opacity: 0.8 }}>
+                        {['IOCL', 'BHEL', 'TCS', 'REIL', 'CEL Sahibabad', 'SMS Demag'].map(c => (
+                            <span key={c} style={{ fontWeight: 'bold', fontSize: '1.3rem', color: '#1A1A2E' }}>{c}</span>
+                        ))}
+                    </div>
+                </section>
+                
+                <section style={{ background: 'white', padding: '80px 24px' }}>
+                    <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
+                        <h2 style={{ textAlign: 'center', fontSize: '38px', marginBottom: '48px', color: '#1A1A2E' }}>Our Services</h2>
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>
+                            {DATA.services.filter(s => s.enabled).map(s => (
+                                <div key={s.id} style={{ background: 'white', borderRadius: '12px', padding: '32px', boxShadow: '0 4px 16px rgba(0,0,0,0.08)', border: '1px solid #E1E8ED', transition: '0.3s' }}>
+                                    <span style={{ fontSize: '48px', display: 'block', marginBottom: '16px' }}>{s.icon}</span>
+                                    <h3 style={{ fontSize: '20px', marginBottom: '12px', color: '#1A1A2E' }}>{s.name}</h3>
+                                    <p style={{ color: '#636E72', marginBottom: '16px' }}>{s.desc}</p>
+                                    <p style={{ fontWeight: 700, color: '#D4AF37', fontSize: '16px', marginBottom: '20px' }}>{s.price}</p>
+                                    <button onClick={() => setShowModal(true)} style={{ background: 'transparent', color: '#1A1A2E', border: '2px solid #1A1A2E', padding: '10px 20px', borderRadius: '6px', fontWeight: 600, cursor: 'pointer', width: '100%' }}>Request Quote</button>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            </>
+        );
+        
+        const ServicesPage = ({ setShowModal }) => (
+            <div style={{ background: 'white', minHeight: '100vh', padding: '80px 24px' }}>
+                <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
+                    <h1 style={{ fontSize: '42px', marginBottom: '48px', textAlign: 'center', color: '#1A1A2E' }}>Our Services</h1>
+                    {DATA.services.filter(s => s.enabled).map(s => (
+                        <div key={s.id} style={{ background: 'white', borderRadius: '12px', padding: '32px', marginBottom: '24px', boxShadow: '0 4px 16px rgba(0,0,0,0.08)', border: '1px solid #E1E8ED' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '16px' }}>
+                                <span style={{ fontSize: '40px' }}>{s.icon}</span>
+                                <h3 style={{ fontSize: '24px', color: '#1A1A2E' }}>{s.name}</h3>
+                            </div>
+                            <p style={{ color: '#636E72', marginBottom: '16px' }}>{s.desc}</p>
+                            <p style={{ fontWeight: 700, color: '#D4AF37', fontSize: '18px', marginBottom: '20px' }}>Price: {s.price}</p>
+                            <button onClick={() => setShowModal(true)} style={{ background: '#D4AF37', color: '#1A1A2E', border: 'none', padding: '12px 24px', borderRadius: '6px', fontWeight: 600, cursor: 'pointer' }}>Request Quote</button>
+                        </div>
+                    ))}
+                </div>
             </div>
-          </div>
-        </header>
-      );
-    };
-
-    const Hero = () => (
-      <section className="card" style={{ textAlign: 'center', marginBottom: '40px' }}>
-        <h2 style={{ fontSize: '48px', color: '#1A1A2E', marginBottom: '20px' }}>MNRE Empanelled Chartered Engineers</h2>
-        <p style={{ fontSize: '20px', color: '#636E72', maxWidth: '600px', margin: '0 auto' }}>
-          Solar Consultancy, Structural Design, CEng Certification across Delhi, Bangalore, Mumbai & more. 500+ Valuations Completed.
-        </p>
-        <button className="btn btn-primary" style={{ marginTop: '24px', fontSize: '18px' }}>Get Quote</button>
-      </section>
-    );
-
-    const Services = () => {
-      const { data } = useApp();
-      return (
-        <section>
-          <h2 style={{ textAlign: 'center', fontSize: '36px', marginBottom: '40px' }}>Our Services</h2>
-          <div className="grid-3">
-            {data.services.map(service => (
-              <div key={service.id} className="card">
-                <h3>{service.name}</h3>
-                <p>{service.pricing ? `₹${service.pricing.min || service.pricing.amount}-50,000` : 'Request Quote'}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-      );
-    };
-
-    // Render
-    const root = createRoot(document.getElementById('root'));
-    root.render(<App />);
-
-    // Toggles
-    document.getElementById('darkModeToggle').addEventListener('click', () => {
-      const app = window.appInstance; // For simplicity; use state in prod
-      if (app) app.setDarkMode(!app.darkMode);
-    });
-  </script>
+        );
+        
+        const ContactPage = () => (
+            <div style={{ background: 'white', minHeight: '100vh', padding: '80px 24px' }}>
+                <div style={{ maxWidth: '1280px', margin: '0 auto', textAlign: 'center' }}>
+                    <h1 style={{ fontSize: '42px', marginBottom: '24px', color: '#1A1A2E' }}>Contact Us</h1>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px', marginBottom: '48px' }}>
+                        <div style={{ background: '#F8F9FA', padding: '32px', borderRadius: '12px' }}>
+                            <div style={{ fontSize: '48px', marginBottom: '16px' }}>📞</div>
+                            <h3 style={{ fontSize: '20px', marginBottom: '8px', color: '#1A1A2E' }}>Call Us</h3>
+                            <p style={{ fontSize: '18px', fontWeight: 600, color: '#1A1A2E' }}>+91-9953715382</p>
+                        </div>
+                        <div style={{ background: '#F8F9FA', padding: '32px', borderRadius: '12px' }}>
+                            <div style={{ fontSize: '48px', marginBottom: '16px' }}>✉️</div>
+                            <h3 style={{ fontSize: '20px', marginBottom: '8px', color: '#1A1A2E' }}>Email Us</h3>
+                            <p style={{ fontSize: '18px', fontWeight: 600, color: '#1A1A2E' }}>info@nexgenceng.com</p>
+                        </div>
+                        <div style={{ background: '#F8F9FA', padding: '32px', borderRadius: '12px' }}>
+                            <div style={{ fontSize: '48px', marginBottom: '16px' }}>📍</div>
+                            <h3 style={{ fontSize: '20px', marginBottom: '8px', color: '#1A1A2E' }}>Visit</h3>
+                            <p style={{ fontSize: '16px', color: '#636E72' }}>Delhi NCR, India</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+        
+        const JobsPage = () => (
+            <div style={{ background: 'white', minHeight: '100vh', padding: '80px 24px' }}>
+                <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
+                    <h1 style={{ fontSize: '42px', marginBottom: '48px', textAlign: 'center', color: '#1A1A2E' }}>Jobs & Careers</h1>
+                    {DATA.jobs.filter(j => j.enabled).map(j => (
+                        <div key={j.id} style={{ background: '#F8F9FA', borderRadius: '12px', padding: '32px', marginBottom: '24px' }}>
+                            <h3 style={{ fontSize: '24px', marginBottom: '12px', color: '#1A1A2E' }}>{j.title}</h3>
+                            <p style={{ color: '#636E72', marginBottom: '8px' }}>📍 {j.location}</p>
+                            <p style={{ color: '#636E72' }}>💼 {j.exp}</p>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        );
+        
+        const NewsPage = () => (
+            <div style={{ background: 'white', minHeight: '100vh', padding: '80px 24px' }}>
+                <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
+                    <h1 style={{ fontSize: '42px', marginBottom: '48px', textAlign: 'center', color: '#1A1A2E' }}>News & Updates</h1>
+                    {DATA.news.filter(n => n.enabled).map(n => (
+                        <div key={n.id} style={{ background: '#F8F9FA', borderRadius: '12px', padding: '32px', marginBottom: '24px' }}>
+                            <h3 style={{ fontSize: '24px', marginBottom: '12px', color: '#1A1A2E' }}>{n.title}</h3>
+                            <p style={{ color: '#636E72', marginBottom: '8px', fontSize: '14px' }}>{n.date}</p>
+                            <p style={{ color: '#636E72' }}>{n.excerpt}</p>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        );
+        
+        const Footer = ({ setPage }) => (
+            <footer style={{ background: '#1A1A2E', color: 'white', padding: '48px 24px 24px', borderTop: '4px solid #D4AF37' }}>
+                <div style={{ maxWidth: '1280px', margin: '0 auto', textAlign: 'center' }}>
+                    <p style={{ color: 'rgba(255,255,255,0.6)', margin: 0, fontSize: '14px' }}>&copy; 2024 NexGen CEng. All Rights Reserved.</p>
+                </div>
+            </footer>
+        );
+        
+        const EnquiryModal = ({ setShowModal, formData, setFormData }) => {
+            const [submitted, setSubmitted] = useState(false);
+            
+            const handleSubmit = (e) => {
+                e.preventDefault();
+                setSubmitted(true);
+                setTimeout(() => {
+                    setShowModal(false);
+                    setSubmitted(false);
+                }, 2500);
+            };
+            
+            if (submitted) {
+                return (
+                    <div className="modal-overlay">
+                        <div className="modal-content" style={{ maxWidth: '500px', textAlign: 'center' }}>
+                            <div style={{ fontSize: '72px', marginBottom: '20px' }}>✅</div>
+                            <h2 style={{ fontSize: '28px', marginBottom: '12px', color: '#1A1A2E' }}>Thank You!</h2>
+                            <p style={{ fontSize: '16px', color: '#636E72' }}>We'll contact you within 24 hours.</p>
+                        </div>
+                    </div>
+                );
+            }
+            
+            return (
+                <div className="modal-overlay" onClick={() => setShowModal(false)}>
+                    <div className="modal-content" onClick={e => e.stopPropagation()}>
+                        <button className="modal-close" onClick={() => setShowModal(false)}>×</button>
+                        <h2 style={{ fontSize: '32px', marginBottom: '24px', color: '#1A1A2E' }}>Request a Quote</h2>
+                        <form onSubmit={handleSubmit}>
+                            <div style={{ marginBottom: '16px' }}>
+                                <input type="text" placeholder="Name *" required style={{ width: '100%', padding: '14px', border: '2px solid #E1E8ED', borderRadius: '6px', fontSize: '15px' }} />
+                            </div>
+                            <div style={{ marginBottom: '16px' }}>
+                                <input type="email" placeholder="Email *" required style={{ width: '100%', padding: '14px', border: '2px solid #E1E8ED', borderRadius: '6px', fontSize: '15px' }} />
+                            </div>
+                            <div style={{ marginBottom: '16px' }}>
+                                <input type="tel" placeholder="Mobile *" required style={{ width: '100%', padding: '14px', border: '2px solid #E1E8ED', borderRadius: '6px', fontSize: '15px' }} />
+                            </div>
+                            <div style={{ marginBottom: '16px' }}>
+                                <select required style={{ width: '100%', padding: '14px', border: '2px solid #E1E8ED', borderRadius: '6px', fontSize: '15px' }}>
+                                    <option value="">Select Service *</option>
+                                    {DATA.services.filter(s => s.enabled).map(s => <option key={s.id} value={s.name}>{s.name}</option>)}
+                                </select>
+                            </div>
+                            <div style={{ marginBottom: '16px' }}>
+                                <textarea placeholder="Your Requirements *" required rows="4" style={{ width: '100%', padding: '14px', border: '2px solid #E1E8ED', borderRadius: '6px', fontSize: '15px' }}></textarea>
+                            </div>
+                            <button type="submit" style={{ width: '100%', background: '#D4AF37', color: '#1A1A2E', border: 'none', padding: '14px', borderRadius: '6px', fontWeight: 600, cursor: 'pointer', fontSize: '16px' }}>Submit Enquiry</button>
+                        </form>
+                    </div>
+                </div>
+            );
+        };
+        
+        document.getElementById('darkToggle').onclick = () => {
+            const isDark = document.body.className === 'dark-mode';
+            document.body.className = isDark ? 'light-mode' : 'dark-mode';
+            document.getElementById('darkToggle').textContent = isDark ? '🌙' : '☀️';
+        };
+        
+        let adminClickCount = 0;
+        document.getElementById('adminToggle').onclick = () => {
+            adminClickCount++;
+            if (adminClickCount >= 3) {
+                const app = document.querySelector('#root')._reactRootContainer._internalRoot.current.child.stateNode;
+                app.setState({ isAdmin: true });
+                adminClickCount = 0;
+            }
+        };
+        
+        ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+    </script>
 </body>
 </html>
-
